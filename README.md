@@ -38,7 +38,7 @@ Region used in the implementation: `us-east-2` (US East, Ohio).
 
 The API invoke URL used during testing was:
 
-`https://twigolkxkq4.execute-api.us-east-2.amazonaws.com`
+`https://twigolxkq4.execute-api.us-east-2.amazonaws.com`
 
 ## AWS resources
 
