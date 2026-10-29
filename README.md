@@ -62,14 +62,6 @@ The frontend is hosted in the S3 bucket created for this project. Before publish
 
 Screenshots in [`screenshots/`](screenshots/) were created from the actual AWS screenshots shared during implementation. Sensitive review URLs and selected private values were redacted.
 
-Observed test outcomes:
-
-- **Automatic approval:** a successful execution returned an `APPROVED` decision with `decidedBy: SYSTEM`.
-- **Automatic rejection:** a successful test application returned `REJECTED`, and an SNS decision email was received.
-- **Human-review waiting state:** a new application reached the underwriter review task and remained running while awaiting a decision.
-- **Human approval:** the review callback returned a recorded decision; the workflow resumed, persisted `APPROVED`, recorded `decidedBy: UNDERWRITER`, and sent an SNS notification.
-- **One-time review token replay:** a reused review link returned an invalid/expired/already-used message.
-- **Status API:** the response showed only `applicationId`, `status`, `loanAmount`, and `decidedAt`, rather than task/review tokens.
 
 
 ## Security considerations
@@ -121,4 +113,12 @@ The application uses AWS serverless services to process loan applications, evalu
 ![Review link reuse blocked](screenshots/11-review-link-reuse-blocked.png)
 
 
+Observed test outcomes:
+
+- **Automatic approval:** a successful execution returned an `APPROVED` decision with `decidedBy: SYSTEM`.
+- **Automatic rejection:** a successful test application returned `REJECTED`, and an SNS decision email was received.
+- **Human-review waiting state:** a new application reached the underwriter review task and remained running while awaiting a decision.
+- **Human approval:** the review callback returned a recorded decision; the workflow resumed, persisted `APPROVED`, recorded `decidedBy: UNDERWRITER`, and sent an SNS notification.
+- **One-time review token replay:** a reused review link returned an invalid/expired/already-used message.
+- **Status API:** the response showed only `applicationId`, `status`, `loanAmount`, and `decidedAt`, rather than task/review tokens.
 
