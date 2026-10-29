@@ -58,11 +58,6 @@ The API invoke URL used during testing was:
 
 The frontend is hosted in the S3 bucket created for this project. Before publishing, review the bucket policy and ensure only intended static website files are public.
 
-## Test evidence
-
-Screenshots in [`screenshots/`](screenshots/) were created from the actual AWS screenshots shared during implementation. Sensitive review URLs and selected private values were redacted.
-
-
 
 ## Security considerations
 
@@ -72,7 +67,7 @@ Screenshots in [`screenshots/`](screenshots/) were created from the actual AWS s
 - Query-string tokens may be present in browser history, email, and logs. A production system should use authenticated reviewers and a carefully designed review interface.
 - The callback consumes the token before sending the Step Functions task response. If the callback operation fails after token consumption, manual recovery may be required.
 - Use least-privilege IAM policies, avoid wildcard permissions where practical, and never commit AWS credentials, task tokens, review tokens, real applicant data, or unredacted environment files.
-- The current credit and fraud rules are simplified educational examples and are not a validated or fair lending model.
+
 
 
 ## Live Demo
