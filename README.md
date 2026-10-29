@@ -82,27 +82,65 @@ Observed test outcomes:
 - Use least-privilege IAM policies, avoid wildcard permissions where practical, and never commit AWS credentials, task tokens, review tokens, real applicant data, or unredacted environment files.
 - The current credit and fraud rules are simplified educational examples and are not a validated or fair lending model.
 
-## Cost notes
 
-This project uses managed AWS services that may incur charges depending on usage, configuration, storage, and data transfer. Review the AWS Billing console and delete resources when the project is no longer needed. Do not assume every service is always free.
+## Live Demo
 
-## Repository layout
+**[Open the Loan Approval Application](https://loan-approval-frontend-558766951343-us-east-2-an.s3.us-east-2.amazonaws.com/index.html)**
 
-```text
-loan-approval-project/
-├── README.md
-├── .gitignore
-├── screenshots/                 # 12 redacted AWS evidence screenshots
-└── src/
-    ├── SubmitApplication.py
-    ├── GetApplication.py
-    ├── CreditCheck.py
-    ├── FraudCheck.py
-    ├── RequestReview.py
-    ├── ReviewCallback.py
-    └── README.md
-```
+The frontend is hosted on Amazon S3 and communicates with Amazon API Gateway to submit applications and retrieve application status.
 
-The `src/` folder contains the six Lambda source files supplied for this project. 
+> **Note:** This is an educational demonstration. Credit and fraud checks use simplified rules and must not be used for real lending decisions.
 
-## 
+## Architecture
+
+The application uses AWS serverless services to process loan applications, evaluate credit and fraud checks, route uncertain applications for human review, and notify users of the final decision.
+
+![AWS Loan Approval Workflow Architecture](screenshots/01-workflow-architecture.png)
+
+### Workflow overview
+
+1. **Application submission:** The frontend sends an application to API Gateway.
+2. **Workflow orchestration:** AWS Step Functions starts and coordinates the workflow.
+3. **Parallel checks:** Lambda functions perform the demonstration credit and fraud checks.
+4. **Decision routing:** The workflow automatically approves, rejects, or requests human review.
+5. **Human review:** SNS sends a review request, and a protected callback returns the review decision.
+6. **Data persistence:** DynamoDB stores the application and its decision status.
+7. **Notifications:** SNS sends the decision notification.
+8. **Status lookup:** The frontend retrieves the application's status through API Gateway.
+
+### AWS services
+
+| Service | Purpose |
+|---|---|
+| Amazon S3 | Hosts the frontend |
+| Amazon API Gateway | Exposes the application API |
+| AWS Lambda | Executes application and decision logic |
+| AWS Step Functions | Orchestrates the workflow |
+| Amazon DynamoDB | Stores application records |
+| Amazon SNS | Sends review requests and decision notifications |
+
+## Screenshots and Test Evidence
+
+### API Gateway routes
+![API Gateway routes](screenshots/02-api-gateway-routes.png)
+
+### Automatic rejection
+![Automatic rejection status](screenshots/03-automatic-rejection-status.png)
+
+### Human review in progress
+![Human review waiting state](screenshots/06-human-review-waiting-execution.png)
+
+### Human-review approval
+![Human approval workflow execution](screenshots/07-human-approval-execution-output.png)
+
+### Decision notification
+![Human approval notification](screenshots/08-human-approval-notification.png)
+
+### Application status response
+![Application status API response](screenshots/09-status-api-response.png)
+
+### Review-link replay protection
+![Review link reuse blocked](screenshots/11-review-link-reuse-blocked.png)
+
+*Evidence note: The human-review rejection path was tested, but a dedicated screenshot of its successful execution was not captured for this evidence set.*
+
