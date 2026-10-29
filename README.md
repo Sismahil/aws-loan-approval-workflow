@@ -74,7 +74,7 @@ Observed test outcomes:
 
 ## Security considerations
 
-- The review links contain one-time tokens. Treat them as confidential; do not commit them to GitHub or share them in screenshots.
+- The review links contain one-time tokens. Treat them as confidential
 - The review callback stores a token-consumed timestamp and removes the active review token when a review is submitted.
 - The status endpoint should return only fields intended for public status lookup. It currently does not authenticate the requester, so anyone who knows an application ID may be able to query its status. Add appropriate authentication/authorization before production use.
 - Query-string tokens may be present in browser history, email, and logs. A production system should use authenticated reviewers and a carefully designed review interface.
