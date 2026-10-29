@@ -103,13 +103,6 @@ loan-approval-project/
     └── README.md
 ```
 
-The `src/` folder contains the six Lambda source files supplied for this project. Before representing them as the exact deployed versions, compare each file against the corresponding Lambda code in the AWS console. The project package does not currently include the frontend HTML/CSS source files; the frontend is described as hosted in S3.
+The `src/` folder contains the six Lambda source files supplied for this project. 
 
-## Before publishing to GitHub
-
-1. Review every screenshot for any remaining personal or sensitive information.
-2. Compare the included Lambda source files with the deployed versions in AWS.
-3. Remove credentials, task/review tokens, real applicant data, and account-specific secrets from all files.
-4. Confirm the S3 bucket and API expose only what is intended for this educational demo; add authentication and authorization before any real use.
-5. Add the missing human-rejection execution screenshot when available.
-6. Create the public repository only after these checks are complete.
+## 
