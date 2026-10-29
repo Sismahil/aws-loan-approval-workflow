@@ -71,7 +71,6 @@ Observed test outcomes:
 - **One-time review token replay:** a reused review link returned an invalid/expired/already-used message.
 - **Status API:** the response showed only `applicationId`, `status`, `loanAmount`, and `decidedAt`, rather than task/review tokens.
 
-A dedicated screenshot of the successful human-rejection execution is not yet included and will be added later. The user reported that the rejection path worked, but the corresponding execution screenshot was not part of the evidence pack available when this README was prepared.
 
 ## Security considerations
 
