@@ -97,27 +97,7 @@ The application uses AWS serverless services to process loan applications, evalu
 
 ![AWS Loan Approval Workflow Architecture](screenshots/01-workflow-architecture.png)
 
-### Workflow overview
 
-1. **Application submission:** The frontend sends an application to API Gateway.
-2. **Workflow orchestration:** AWS Step Functions starts and coordinates the workflow.
-3. **Parallel checks:** Lambda functions perform the demonstration credit and fraud checks.
-4. **Decision routing:** The workflow automatically approves, rejects, or requests human review.
-5. **Human review:** SNS sends a review request, and a protected callback returns the review decision.
-6. **Data persistence:** DynamoDB stores the application and its decision status.
-7. **Notifications:** SNS sends the decision notification.
-8. **Status lookup:** The frontend retrieves the application's status through API Gateway.
-
-### AWS services
-
-| Service | Purpose |
-|---|---|
-| Amazon S3 | Hosts the frontend |
-| Amazon API Gateway | Exposes the application API |
-| AWS Lambda | Executes application and decision logic |
-| AWS Step Functions | Orchestrates the workflow |
-| Amazon DynamoDB | Stores application records |
-| Amazon SNS | Sends review requests and decision notifications |
 
 ## Screenshots and Test Evidence
 
@@ -142,5 +122,5 @@ The application uses AWS serverless services to process loan applications, evalu
 ### Review-link replay protection
 ![Review link reuse blocked](screenshots/11-review-link-reuse-blocked.png)
 
-*Evidence note: The human-review rejection path was tested, but a dedicated screenshot of its successful execution was not captured for this evidence set.*
+
 
