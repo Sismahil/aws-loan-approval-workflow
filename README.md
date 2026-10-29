@@ -101,8 +101,6 @@ The application uses AWS serverless services to process loan applications, evalu
 
 ## Screenshots and Test Evidence
 
-### API Gateway routes
-![API Gateway routes](screenshots/02-api-gateway-routes.png)
 
 ### Automatic rejection
 ![Automatic rejection status](screenshots/03-automatic-rejection-status.png)
