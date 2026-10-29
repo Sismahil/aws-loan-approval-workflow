@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Loan Approval Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Loan Approval Portal</h1>
+    <p>Submit an application and track its status.</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Apply for a Loan</h2>
+      <form id="applicationForm">
+        <label>Full name
+          <input name="applicantName" required>
+        </label>
+        <label>Email
+          <input name="email" type="email" required>
+        </label>
+        <label>Annual income ($)
+          <input name="annualIncome" type="number" min="1" required>
+        </label>
+        <label>Existing debt ($)
+          <input name="existingDebt" type="number" min="0" required>
+        </label>
+        <label>Loan amount ($)
+          <input name="loanAmount" type="number" min="1" required>
+        </label>
+        <button type="submit">Submit application</button>
+      </form>
+      <p id="submitMessage" role="status"></p>
+    </section>
+
+    <section class="card">
+      <h2>Check Application Status</h2>
+      <form id="statusForm">
+        <label>Application ID
+          <input id="applicationId" required>
+        </label>
+        <button type="submit">Check status</button>
+      </form>
+      <pre id="statusMessage" role="status"></pre>
+    </section>
+  </main>
+
+  <footer>Educational demonstration · Not a real lending service</footer>
+
+  <script>
+    const API_BASE =
+      "https://twigolxkq4.execute-api.us-east-2.amazonaws.com";
+
+    const submitMessage = document.getElementById("submitMessage");
+    const statusMessage = document.getElementById("statusMessage");
+
+    document.getElementById("applicationForm")
+      .addEventListener("submit", async (event) => {
+        event.preventDefault();
+        submitMessage.textContent = "Submitting...";
+        const form = new FormData(event.target);
+
+        const payload = {
+          applicantName: form.get("applicantName").trim(),
+          email: form.get("email").trim(),
+          annualIncome: Number(form.get("annualIncome")),
+          existingDebt: Number(form.get("existingDebt")),
+          loanAmount: Number(form.get("loanAmount"))
+        };
+
+        try {
+          const response = await fetch(`${API_BASE}/applications`, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(payload)
+          });
+          const result = await response.json();
+
+          if (!response.ok) {
+            throw new Error(result.error || "Submission failed");
+          }
+
+          document.getElementById("applicationId").value =
+            result.applicationId;
+
+          submitMessage.textContent =
+            `Application submitted. Your ID is ${result.applicationId}`;
+          event.target.reset();
+        } catch (error) {
+          submitMessage.textContent = `Error: ${error.message}`;
+        }
+      });
+
+    document.getElementById("statusForm")
+      .addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const id = document.getElementById("applicationId").value.trim();
+        statusMessage.textContent = "Checking...";
+
+        try {
+          const response = await fetch(
+            `${API_BASE}/applications/${encodeURIComponent(id)}`
+          );
+          const result = await response.json();
+
+          if (!response.ok) {
+            throw new Error(result.error || "Lookup failed");
+          }
+
+          statusMessage.textContent = JSON.stringify(result, null, 2);
+        } catch (error) {
+          statusMessage.textContent = `Error: ${error.message}`;
+        }
+      });
+  </script>
+</body>
+</html>
