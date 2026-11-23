@@ -2,7 +2,6 @@
 
 An educational serverless loan-application workflow built on AWS. The system accepts applications through an API, stores application data, runs credit and fraud checks in parallel, makes rule-based decisions, routes uncertain applications to human review, and sends decision notifications.
 
-> **Educational demonstration only.** This project is not a real lending service and must not be used to make actual credit decisions. The credit score and fraud checks are simplified demonstration logic, not a validated credit model.
 
 ## Architecture
 
